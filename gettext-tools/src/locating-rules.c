@@ -333,7 +333,6 @@ locating_rule_list_add_from_file (struct locating_rule_list_ty *rules,
           if (!xmlHasProp (node, BAD_CAST "pattern"))
             {
               missing_attribute (node, "pattern");
-              xmlFreeDoc (doc);
             }
           else
             {
