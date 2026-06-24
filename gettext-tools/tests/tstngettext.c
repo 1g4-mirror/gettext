@@ -43,6 +43,9 @@
 #undef _LIBINTL_H
 #include "libgnuintl.h"
 
+/* Disable the override of setlocale that libgnuintl.h activates on MacOS X
+   and Windows.  This test relies on the fake setlocale function in
+   setlocale.c.  */
 #if defined _WIN32 && !defined __CYGWIN__
 # undef setlocale
 # define setlocale fake_setlocale
