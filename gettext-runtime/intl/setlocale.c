@@ -24,7 +24,7 @@
    requested (locale = "") and no relevant environment variable is set, the
    locale chosen by the user is used.
    This matters on MacOS X 10 and Windows.
-   See the comments in localename.c, function gl_locale_name_default.  */
+   See the comments in localename-unsafe.c, function gl_locale_name_default.  */
 
 /* Specification.  */
 #include <locale.h>
@@ -286,7 +286,7 @@ category_to_name (int category)
 /* Table from ISO 639 language code, optionally with country or script suffix,
    to English name.
    Keep in sync with the gl_locale_name_from_win32_LANGID function in
-   localename.c!  */
+   localename-unsafe.c!  */
 struct table_entry
 {
   const char *code;
@@ -463,7 +463,7 @@ static const struct table_entry language_table[] =
 
 /* Table from ISO 3166 country code to English name.
    Keep in sync with the gl_locale_name_from_win32_LANGID function in
-   localename.c!  */
+   localename-unsafe.c!  */
 static const struct table_entry country_table[] =
   {
     { "AE", "U.A.E." },
