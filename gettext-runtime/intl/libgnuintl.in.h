@@ -1081,8 +1081,11 @@ namespace std { using ::libintl_freelocale; }
 #if (defined __APPLE__ && defined __MACH__) || defined _WIN32 || defined __CYGWIN__
 
 # ifndef GNULIB_defined_setlocale /* don't override gnulib */
+/* The return type 'const char *' serves the purpose of producing warnings
+   for invalid uses of the value returned from this function.  */
 #  ifdef _INTL_REDIRECT_INLINE
-extern char *libintl_setlocale (int, const char *);
+extern const char *libintl_setlocale (int, const char *);
+#   undef setlocale /* Disable #define setlocale(...) ... */
 #   ifndef __cplusplus
 static
 #   endif
@@ -1090,15 +1093,22 @@ inline
 _INTL_FORCE_INLINE
 char *setlocale (int __category, const char *__locale)
 {
-  return libintl_setlocale (__category, __locale);
+#   ifdef __cplusplus
+  return const_cast<char *>(libintl_setlocale (__category, __locale));
+#   else
+  return (char *) libintl_setlocale (__category, __locale);
+#   endif
 }
 #  elif !defined _INTL_NO_DEFINE_MACRO_SETLOCALE
 #   ifdef _INTL_REDIRECT_MACROS
 #    undef setlocale
 #    define setlocale libintl_setlocale
-#   endif
+extern const char *setlocale (int, const char *);
+#   else /* defined _INTL_REDIRECT_ASM */
+#    undef setlocale /* Disable #define setlocale(...) ... */
 extern char *setlocale (int, const char *)
        _INTL_ASM (libintl_setlocale);
+#   endif
 #   if defined _INTL_REDIRECT_MACROS && defined __cplusplus && !defined _INTL_CXX_NO_CLOBBER_STD_NAMESPACE
 namespace std { using ::libintl_setlocale; }
 #   endif
