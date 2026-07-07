@@ -7101,17 +7101,32 @@ T + ((N-1)*8)| length & offset (N-1)th translation      |  | | | |
 @node Security of MO Files
 @section Security considerations around MO Files
 
-A @code{.mo} file should be installed with the same write permissions as the program or library to which it belongs.  For instance, if a distribution installs a program (executable) or shared library as owned by @code{root} and not writable by unprivileged users, it should install the @code{.mo} files as owned by @code{root} and not writable by unprivileged users as well.
+A @code{.mo} file should be installed
+with the same write permissions as the program or library to which it belongs.
+For instance,
+if a distribution installs a program (executable) or shared library
+as owned by @code{root} and not writable by unprivileged users,
+it should install the @code{.mo} files
+as owned by @code{root} and not writable by unprivileged users as well.
 
 This is necessary for two reasons:
 @itemize @bullet
 @item
-The code in GNU libintl and GNU libc that interprets the MO files does not defensively check against out-of-range offsets and invalid fields in the @code{.mo} file's header (see @ref{MO Files}).
+The code in GNU libintl and GNU libc that interprets the MO files
+does not defensively check against out-of-range offsets
+and invalid fields in the @code{.mo} file's header (see @ref{MO Files}).
 @item
-For programming languages like C, the translation of a format string is supposed to consume the same number and the same type of arguments as the untranslated format string.  (Otherwise, the program that makes use of the translation may crash.)
+For programming languages like C, the translation of a format string
+is supposed to consume the same number and the same type of arguments
+as the untranslated format string.
+(Otherwise, the program that makes use of the translation may crash.)
 @end itemize
 
-For these two reasons also, it is recommended that the @code{.mo} files are created through @samp{msgfmt -c}.  The use of @code{msgfmt} will guarantee that the @code{.mo} file is well-formed, and the use of the @code{-c} or @code{--check} option will guarantee the consistency of the translations of format strings.
+For these two reasons also, it is recommended that
+the @code{.mo} filesare created through @samp{msgfmt -c}.
+The use of @code{msgfmt} will guarantee that the @code{.mo} file is well-formed,
+and the use of the @code{-c} or @code{--check} option will guarantee
+the consistency of the translations of format strings.
 
 @node Programmers
 @chapter The Programmer's View
