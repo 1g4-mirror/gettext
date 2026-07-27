@@ -10740,9 +10740,9 @@ chapter 22.3 @w{Formatted Output},
 
 Emacs Lisp format strings are documented in the Emacs Lisp reference,
 section @w{Formatting Strings},
-@uref{https://www.gnu.org/manual/elisp-manual-21-2.8/html_chapter/elisp_4.html#SEC75}.
+@uref{https://www.gnu.org/software/emacs/manual/html_node/elisp/Formatting-Strings.html}.
 Note that as of version 21, XEmacs supports numbered argument specifications
-in format strings while FSF Emacs doesn't.
+in format strings while GNU Emacs doesn't.
 
 @node librep-format
 @subsection librep Format Strings
