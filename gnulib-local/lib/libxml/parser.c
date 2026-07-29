@@ -1,5 +1,5 @@
 /* libxml2 - Library for parsing XML documents
- * Copyright (C) 2006-2019 Free Software Foundation, Inc.
+ * Copyright (C) 2006-2026 Free Software Foundation, Inc.
  *
  * This file is not part of the GNU gettext program, but is used with
  * GNU gettext.
@@ -9460,12 +9460,11 @@ next_attr:
         if (atts[i+2] != NULL) {
             /*
              * Arithmetic on dangling pointers is technically undefined
-             * behavior, but well...
+             * behavior. Therefore:
              */
-            ptrdiff_t offset = ctxt->input->base - atts[i+2];
+            atts[i+3] = ctxt->input->base + (atts[i+3] - atts[i+2]); /* value */
+            atts[i+4] = ctxt->input->base + (atts[i+4] - atts[i+2]); /* valuend */
             atts[i+2]  = NULL;    /* Reset repurposed namespace URI */
-            atts[i+3] += offset;  /* value */
-            atts[i+4] += offset;  /* valuend */
         }
     }
 
