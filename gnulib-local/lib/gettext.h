@@ -283,10 +283,8 @@ dcgettext (const char *domain, const char *msgid, int category)
 
 #if defined __GNUC__ || defined __clang__
 __inline
-#else
-#ifdef __cplusplus
+#elif defined __cplusplus
 inline
-#endif
 #endif
 static const char *
 pgettext_aux (const char *domain,
@@ -302,10 +300,8 @@ pgettext_aux (const char *domain,
 
 #if defined __GNUC__ || defined __clang__
 __inline
-#else
-#ifdef __cplusplus
+#elif defined __cplusplus
 inline
-#endif
 #endif
 static const char *
 npgettext_aux (const char *domain,
@@ -355,10 +351,8 @@ npgettext_aux (const char *domain,
 
 #if defined __GNUC__ || defined __clang__
 __inline
-#else
-#ifdef __cplusplus
+#elif defined __cplusplus
 inline
-#endif
 #endif
 static const char *
 dcpgettext_expr (const char *domain,
@@ -401,10 +395,8 @@ dcpgettext_expr (const char *domain,
 
 #if defined __GNUC__ || defined __clang__
 __inline
-#else
-#ifdef __cplusplus
+#elif defined __cplusplus
 inline
-#endif
 #endif
 static const char *
 dcnpgettext_expr (const char *domain,
