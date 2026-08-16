@@ -38,9 +38,9 @@
 
 
 static void
-xerror (int severity, const char *prefix_tail,
-        const char *filename, size_t lineno, size_t column,
-        int multiline_p, const char *message_text)
+textmode_xerror_internal (int severity, const char *prefix_tail,
+                          const char *filename, size_t lineno, size_t column,
+                          int multiline_p, const char *message_text)
 {
   if (multiline_p)
     {
@@ -124,8 +124,8 @@ textmode_xerror (int severity,
       column = (size_t)(-1);
     }
 
-  xerror (severity, prefix_tail, filename, lineno, column,
-          multiline_p, message_text);
+  textmode_xerror_internal (severity, prefix_tail, filename, lineno, column,
+                            multiline_p, message_text);
 }
 
 static void
@@ -157,20 +157,23 @@ textmode_xerror2 (int severity,
     }
 
   if (multiline_p1)
-    xerror (severity1, prefix_tail, filename1, lineno1, column1, multiline_p1,
-            message_text1);
+    textmode_xerror_internal (severity1, prefix_tail,
+                              filename1, lineno1, column1,
+                              multiline_p1, message_text1);
   else
     {
       char *message_text1_extended = xasprintf ("%s...", message_text1);
-      xerror (severity1, prefix_tail, filename1, lineno1, column1,
-              multiline_p1, message_text1_extended);
+      textmode_xerror_internal (severity1, prefix_tail,
+                                filename1, lineno1, column1,
+                                multiline_p1, message_text1_extended);
       free (message_text1_extended);
     }
 
   {
     char *message_text2_extended = xasprintf ("...%s", message_text2);
-    xerror (severity, prefix_tail, filename2, lineno2, column2,
-            multiline_p2, message_text2_extended);
+    textmode_xerror_internal (severity, prefix_tail,
+                              filename2, lineno2, column2,
+                              multiline_p2, message_text2_extended);
     free (message_text2_extended);
   }
 
