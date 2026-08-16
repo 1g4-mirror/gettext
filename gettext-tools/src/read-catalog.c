@@ -333,10 +333,10 @@ default_set_domain (default_catalog_reader_ty *dcatr,
     dcatr->domain = name;
   else
     {
-      dcatr->xeh->xerror (CAT_SEVERITY_ERROR, NULL,
-                          name_pos->file_name, name_pos->line_number, (size_t)(-1),
-                          false,
-                          _("this file may not contain domain directives"));
+      xerror (dcatr->xeh, CAT_SEVERITY_ERROR, NULL,
+              name_pos->file_name, name_pos->line_number, (size_t)(-1),
+              false,
+              _("this file may not contain domain directives"));
 
       /* NAME was allocated in read-po-gram.y but is not used anywhere.  */
       free (name);
@@ -378,15 +378,15 @@ default_add_message (default_catalog_reader_ty *dcatr,
              translations are equal or different.  This is for consistency
              with msgmerge, msgcat and others.  The user can use the
              msguniq program to get rid of duplicates.  */
-          dcatr->xeh->xerror2 (CAT_SEVERITY_ERROR,
-                               NULL,
-                               msgid_pos->file_name, msgid_pos->line_number, (size_t)(-1),
-                               false,
-                               _("duplicate message definition"),
-                               mp,
-                               NULL, 0, 0,
-                               false,
-                               _("this is the location of the first definition"));
+          xerror2 (dcatr->xeh, CAT_SEVERITY_ERROR,
+                   NULL,
+                   msgid_pos->file_name, msgid_pos->line_number, (size_t)(-1),
+                   false,
+                   _("duplicate message definition"),
+                   mp,
+                   NULL, 0, 0,
+                   false,
+                   _("this is the location of the first definition"));
         }
       /* We don't need the just constructed entries' parameter string
          (allocated in read-po-gram.y).  */

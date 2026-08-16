@@ -26,7 +26,7 @@
 #define PO_SEVERITY_ERROR       CAT_SEVERITY_ERROR       /* an error, the operation cannot complete */
 #define PO_SEVERITY_FATAL_ERROR CAT_SEVERITY_FATAL_ERROR /* an error, the operation must be aborted */
 
-#define po_xerror  (textmode_xerror_handler->xerror)
-#define po_xerror2 (textmode_xerror_handler->xerror2)
+#define po_xerror(...)   xerror (textmode_xerror_handler, __VA_ARGS__)
+#define po_xerror2(...)  xerror2 (textmode_xerror_handler, __VA_ARGS__)
 
 #endif /* _PO_XERROR_H */

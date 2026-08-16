@@ -349,10 +349,10 @@ phase4_getuc (abstract_catalog_reader_ty *catr)
               else
                 {
                   phase3_ungetc (c1);
-                  catr->xeh->xerror (CAT_SEVERITY_ERROR, NULL,
-                                     real_file_name, pos.line_number, (size_t)(-1),
-                                     false,
-                                     _("warning: invalid \\uxxxx syntax for Unicode character"));
+                  xerror (catr->xeh, CAT_SEVERITY_ERROR, NULL,
+                          real_file_name, pos.line_number, (size_t)(-1),
+                          false,
+                          _("warning: invalid \\uxxxx syntax for Unicode character"));
                   return 'u';
                 }
             }
@@ -421,10 +421,9 @@ read_escaped_string (abstract_catalog_reader_ty *catr, bool in_key)
   #define utf8_buffer_append_lone_surrogate(uc, line) \
     do                                                                        \
       {                                                                       \
-        catr->xeh->xerror (CAT_SEVERITY_ERROR, NULL,                          \
-                           real_file_name, (line), (size_t)(-1), false,       \
-                           xasprintf (_("warning: lone surrogate U+%04X"),    \
-                                      (uc)));                                 \
+        xerror (catr->xeh, CAT_SEVERITY_ERROR, NULL,                          \
+                real_file_name, (line), (size_t)(-1), false,                  \
+                xasprintf (_("warning: lone surrogate U+%04X"), (uc)));       \
         utf8_buffer_ensure_available (3);                                     \
         utf8_buffer[utf8_buflen++] = 0xef;                                    \
         utf8_buffer[utf8_buflen++] = 0xbf;                                    \
@@ -488,10 +487,10 @@ read_escaped_string (abstract_catalog_reader_ty *catr, bool in_key)
               utf8_buffer_ensure_available (6);
               int len = u8_uctomb (utf8_buffer + utf8_buflen, uc, 6);
               if (len < 0)
-                catr->xeh->xerror (CAT_SEVERITY_ERROR, NULL,
-                                   real_file_name, pos.line_number, (size_t)(-1),
-                                   false,
-                                   _("warning: invalid Unicode character"));
+                xerror (catr->xeh, CAT_SEVERITY_ERROR, NULL,
+                        real_file_name, pos.line_number, (size_t)(-1),
+                        false,
+                        _("warning: invalid Unicode character"));
               else
                 utf8_buflen += len;
 
@@ -519,10 +518,10 @@ read_escaped_string (abstract_catalog_reader_ty *catr, bool in_key)
                   utf8_buffer_ensure_available (3);
                   int len = u8_uctomb (utf8_buffer + utf8_buflen, uc, 3);
                   if (len < 0)
-                    catr->xeh->xerror (CAT_SEVERITY_ERROR, NULL,
-                                       real_file_name, pos.line_number, (size_t)(-1),
-                                       false,
-                                       _("warning: invalid Unicode character"));
+                    xerror (catr->xeh, CAT_SEVERITY_ERROR, NULL,
+                            real_file_name, pos.line_number, (size_t)(-1),
+                            false,
+                            _("warning: invalid Unicode character"));
                   else
                     utf8_buflen += len;
                 }
@@ -593,10 +592,10 @@ properties_parse (abstract_catalog_reader_ty *catr, FILE *file,
   if (contents == NULL)
     {
       int err = errno;
-      catr->xeh->xerror (CAT_SEVERITY_FATAL_ERROR, NULL, NULL, 0, 0, false,
-                         xstrerror (xasprintf (_("error while reading \"%s\""),
-                                               real_filename),
-                                    err));
+      xerror (catr->xeh, CAT_SEVERITY_FATAL_ERROR, NULL, NULL, 0, 0, false,
+              xstrerror (xasprintf (_("error while reading \"%s\""),
+                                    real_filename),
+                         err));
       return;
     }
 

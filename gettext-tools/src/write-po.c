@@ -788,9 +788,9 @@ wrap (const message_ty *mp, ostream_t stream,
                     {
                       if (errno == EILSEQ)
                         {
-                          xeh->xerror (CAT_SEVERITY_ERROR, mp, NULL, 0, 0,
-                                       false,
-                                       _("invalid multibyte sequence"));
+                          xerror (xeh, CAT_SEVERITY_ERROR, mp, NULL, 0, 0,
+                                  false,
+                                  _("invalid multibyte sequence"));
                           continue;
                         }
                       else if (errno == EINVAL)
@@ -798,9 +798,9 @@ wrap (const message_ty *mp, ostream_t stream,
                           /* This could happen if an incomplete
                              multibyte sequence at the end of input
                              bytes.  */
-                          xeh->xerror (CAT_SEVERITY_ERROR, mp, NULL, 0, 0,
-                                       false,
-                                       _("incomplete multibyte sequence"));
+                          xerror (xeh, CAT_SEVERITY_ERROR, mp, NULL, 0, 0,
+                                  false,
+                                  _("incomplete multibyte sequence"));
                           continue;
                         }
                       else
@@ -869,8 +869,8 @@ wrap (const message_ty *mp, ostream_t stream,
                   char *error_message =
                     xasprintf (_("internationalized messages should not contain the '\\%c' escape sequence"),
                                c);
-                  xeh->xerror (CAT_SEVERITY_WARNING, mp, NULL, 0, 0, false,
-                               error_message);
+                  xerror (xeh, CAT_SEVERITY_WARNING, mp, NULL, 0, 0, false,
+                          error_message);
                   free (error_message);
                 }
             }
@@ -931,8 +931,8 @@ wrap (const message_ty *mp, ostream_t stream,
                     {
                       if (errno == EILSEQ)
                         {
-                          xeh->xerror (CAT_SEVERITY_ERROR, mp, NULL, 0, 0,
-                                       false, _("invalid multibyte sequence"));
+                          xerror (xeh, CAT_SEVERITY_ERROR, mp, NULL, 0, 0,
+                                  false, _("invalid multibyte sequence"));
                           continue;
                         }
                       else
@@ -1318,7 +1318,7 @@ The following msgctxt contains non-ASCII characters.\n\
 This will cause problems to translators who use a character encoding\n\
 different from yours. Consider using a pure ASCII msgctxt instead.\n\
 %s\n"), mp->msgctxt);
-      xeh->xerror (CAT_SEVERITY_WARNING, mp, NULL, 0, 0, true, warning_message);
+      xerror (xeh, CAT_SEVERITY_WARNING, mp, NULL, 0, 0, true, warning_message);
       free (warning_message);
     }
   if (!is_ascii_string (mp->msgid)
@@ -1330,7 +1330,7 @@ The following msgid contains non-ASCII characters.\n\
 This will cause problems to translators who use a character encoding\n\
 different from yours. Consider using a pure ASCII msgid instead.\n\
 %s\n"), mp->msgid);
-      xeh->xerror (CAT_SEVERITY_WARNING, mp, NULL, 0, 0, true, warning_message);
+      xerror (xeh, CAT_SEVERITY_WARNING, mp, NULL, 0, 0, true, warning_message);
       free (warning_message);
     }
   if (mp->msgctxt != NULL)
@@ -1483,7 +1483,7 @@ The following msgctxt contains non-ASCII characters.\n\
 This will cause problems to translators who use a character encoding\n\
 different from yours. Consider using a pure ASCII msgctxt instead.\n\
 %s\n"), mp->msgctxt);
-      xeh->xerror (CAT_SEVERITY_WARNING, mp, NULL, 0, 0, true, warning_message);
+      xerror (xeh, CAT_SEVERITY_WARNING, mp, NULL, 0, 0, true, warning_message);
       free (warning_message);
     }
   if (!is_ascii_string (mp->msgid)
@@ -1495,7 +1495,7 @@ The following msgid contains non-ASCII characters.\n\
 This will cause problems to translators who use a character encoding\n\
 different from yours. Consider using a pure ASCII msgid instead.\n\
 %s\n"), mp->msgid);
-      xeh->xerror (CAT_SEVERITY_WARNING, mp, NULL, 0, 0, true, warning_message);
+      xerror (xeh, CAT_SEVERITY_WARNING, mp, NULL, 0, 0, true, warning_message);
       free (warning_message);
     }
   if (mp->msgctxt != NULL)

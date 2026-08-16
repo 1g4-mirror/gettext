@@ -92,10 +92,10 @@ phase1_getc (abstract_catalog_reader_ty *catr)
       if (ferror (fp))
         {
           int err = errno;
-          catr->xeh->xerror (CAT_SEVERITY_FATAL_ERROR, NULL, NULL, 0, 0, false,
-                             xstrerror (xasprintf (_("error while reading \"%s\""),
-                                                   real_file_name),
-                                        err));
+          xerror (catr->xeh, CAT_SEVERITY_FATAL_ERROR, NULL, NULL, 0, 0, false,
+                  xstrerror (xasprintf (_("error while reading \"%s\""),
+                                        real_file_name),
+                             err));
         }
       return EOF;
     }
@@ -779,17 +779,17 @@ read_string (abstract_catalog_reader_ty *catr, lex_pos_ty *start_pos)
           buffer[buflen++] = c;
         }
       if (c == UEOF)
-        catr->xeh->xerror (CAT_SEVERITY_ERROR, NULL,
-                           real_file_name, pos.line_number, (size_t)(-1), false,
-                           _("warning: unterminated string"));
+        xerror (catr->xeh, CAT_SEVERITY_ERROR, NULL,
+                real_file_name, pos.line_number, (size_t)(-1), false,
+                _("warning: unterminated string"));
     }
   else
     {
       /* Read a token outside quotes.  */
       if (is_quotable (c))
-        catr->xeh->xerror (CAT_SEVERITY_ERROR, NULL,
-                           real_file_name, pos.line_number, (size_t)(-1), false,
-                           _("warning: syntax error"));
+        xerror (catr->xeh, CAT_SEVERITY_ERROR, NULL,
+                real_file_name, pos.line_number, (size_t)(-1), false,
+                _("warning: syntax error"));
       for (; c != UEOF && !is_quotable (c); c = phase4_getc (catr))
         {
           if (buflen >= bufmax)
@@ -846,10 +846,10 @@ stringtable_parse (abstract_catalog_reader_ty *catr, FILE *file,
       /* Expect a '=' or ';'.  */
       if (c == UEOF)
         {
-          catr->xeh->xerror (CAT_SEVERITY_ERROR, NULL,
-                             real_file_name, pos.line_number, (size_t)(-1),
-                             false,
-                             _("warning: unterminated key/value pair"));
+          xerror (catr->xeh, CAT_SEVERITY_ERROR, NULL,
+                  real_file_name, pos.line_number, (size_t)(-1),
+                  false,
+                  _("warning: unterminated key/value pair"));
           break;
         }
       if (c == ';')
@@ -871,10 +871,10 @@ stringtable_parse (abstract_catalog_reader_ty *catr, FILE *file,
           char *msgstr = read_string (catr, &msgstr_pos);
           if (msgstr == NULL)
             {
-              catr->xeh->xerror (CAT_SEVERITY_ERROR, NULL,
-                                 real_file_name, pos.line_number, (size_t)(-1),
-                                 false,
-                                 _("warning: unterminated key/value pair"));
+              xerror (catr->xeh, CAT_SEVERITY_ERROR, NULL,
+                      real_file_name, pos.line_number, (size_t)(-1),
+                      false,
+                      _("warning: unterminated key/value pair"));
               break;
             }
 
@@ -919,19 +919,19 @@ stringtable_parse (abstract_catalog_reader_ty *catr, FILE *file,
             }
           else
             {
-              catr->xeh->xerror (CAT_SEVERITY_ERROR, NULL,
-                                 real_file_name, pos.line_number, (size_t)(-1),
-                                 false,
-                                 _("warning: syntax error, expected ';' after string"));
+              xerror (catr->xeh, CAT_SEVERITY_ERROR, NULL,
+                      real_file_name, pos.line_number, (size_t)(-1),
+                      false,
+                      _("warning: syntax error, expected ';' after string"));
               break;
             }
         }
       else
         {
-          catr->xeh->xerror (CAT_SEVERITY_ERROR, NULL,
-                             real_file_name, pos.line_number, (size_t)(-1),
-                             false,
-                             _("warning: syntax error, expected '=' or ';' after string"));
+          xerror (catr->xeh, CAT_SEVERITY_ERROR, NULL,
+                  real_file_name, pos.line_number, (size_t)(-1),
+                  false,
+                  _("warning: syntax error, expected '=' or ';' after string"));
           break;
         }
     }

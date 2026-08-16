@@ -105,14 +105,14 @@ check_plural_eval (const struct expression *plural_expr,
       if (res.status != PE_OK)
         {
           if (res.status == PE_INTDIV)
-            xeh->xerror (CAT_SEVERITY_ERROR, header, NULL, 0, 0, false,
-                         _("plural expression can produce division by zero"));
+            xerror (xeh, CAT_SEVERITY_ERROR, header, NULL, 0, 0, false,
+                    _("plural expression can produce division by zero"));
           else if (res.status == PE_INTOVF)
-            xeh->xerror (CAT_SEVERITY_ERROR, header, NULL, 0, 0, false,
-                         _("plural expression can produce integer overflow"));
+            xerror (xeh, CAT_SEVERITY_ERROR, header, NULL, 0, 0, false,
+                    _("plural expression can produce integer overflow"));
           else if (res.status == PE_STACKOVF)
-            xeh->xerror (CAT_SEVERITY_ERROR, header, NULL, 0, 0, false,
-                         _("plural expression can produce stack overflow"));
+            xerror (xeh, CAT_SEVERITY_ERROR, header, NULL, 0, 0, false,
+                    _("plural expression can produce stack overflow"));
           else
             /* Other res.status values should not occur.  */
             abort ();
@@ -125,8 +125,8 @@ check_plural_eval (const struct expression *plural_expr,
 
       if ((long) val < 0)
         {
-          xeh->xerror (CAT_SEVERITY_ERROR, header, NULL, 0, 0, false,
-                       _("plural expression can produce negative values"));
+          xerror (xeh, CAT_SEVERITY_ERROR, header, NULL, 0, 0, false,
+                  _("plural expression can produce negative values"));
           free (array);
           return 1;
         }
@@ -135,7 +135,7 @@ check_plural_eval (const struct expression *plural_expr,
           char *msg =
             xasprintf (_("nplurals = %lu but plural expression can produce values as large as %lu"),
                        nplurals_value, val);
-          xeh->xerror (CAT_SEVERITY_ERROR, header, NULL, 0, 0, false, msg);
+          xerror (xeh, CAT_SEVERITY_ERROR, header, NULL, 0, 0, false, msg);
           free (msg);
           free (array);
           return 1;
@@ -301,16 +301,16 @@ check_plural (const message_list_ty *mlp,
           if (help != NULL)
             {
               char *msg2ext = xasprintf ("%s\n%s", msg2, help);
-              xeh->xerror2 (CAT_SEVERITY_ERROR,
-                            has_plural, NULL, 0, 0, false, msg1,
-                            header, NULL, 0, 0, true, msg2ext);
+              xerror2 (xeh, CAT_SEVERITY_ERROR,
+                       has_plural, NULL, 0, 0, false, msg1,
+                       header, NULL, 0, 0, true, msg2ext);
               free (msg2ext);
               free (help);
             }
           else
-            xeh->xerror2 (CAT_SEVERITY_ERROR,
-                          has_plural, NULL, 0, 0, false, msg1,
-                          header, NULL, 0, 0, false, msg2);
+            xerror2 (xeh, CAT_SEVERITY_ERROR,
+                     has_plural, NULL, 0, 0, false, msg1,
+                     header, NULL, 0, 0, false, msg2);
 
           seen_errors++;
         }
@@ -325,16 +325,16 @@ check_plural (const message_list_ty *mlp,
           if (help != NULL)
             {
               char *msg2ext = xasprintf ("%s\n%s", msg2, help);
-              xeh->xerror2 (CAT_SEVERITY_ERROR,
-                            has_plural, NULL, 0, 0, false, msg1,
-                            header, NULL, 0, 0, true, msg2ext);
+              xerror2 (xeh, CAT_SEVERITY_ERROR,
+                       has_plural, NULL, 0, 0, false, msg1,
+                       header, NULL, 0, 0, true, msg2ext);
               free (msg2ext);
               free (help);
             }
           else
-            xeh->xerror2 (CAT_SEVERITY_ERROR,
-                          has_plural, NULL, 0, 0, false, msg1,
-                          header, NULL, 0, 0, false, msg2);
+            xerror2 (xeh, CAT_SEVERITY_ERROR,
+                     has_plural, NULL, 0, 0, false, msg1,
+                     header, NULL, 0, 0, false, msg2);
 
           seen_errors++;
         }
@@ -358,14 +358,14 @@ check_plural (const message_list_ty *mlp,
                 if (help != NULL)
                   {
                     char *msgext = xasprintf ("%s\n%s", msg, help);
-                    xeh->xerror (CAT_SEVERITY_ERROR, header, NULL, 0, 0, true,
-                                 msgext);
+                    xerror (xeh, CAT_SEVERITY_ERROR, header, NULL, 0, 0, true,
+                            msgext);
                     free (msgext);
                     free (help);
                   }
                 else
-                  xeh->xerror (CAT_SEVERITY_ERROR, header, NULL, 0, 0, false,
-                               msg);
+                  xerror (xeh, CAT_SEVERITY_ERROR, header, NULL, 0, 0, false,
+                          msg);
 
                 seen_errors++;
               }
@@ -385,14 +385,14 @@ check_plural (const message_list_ty *mlp,
                 if (help != NULL)
                   {
                     char *msgext = xasprintf ("%s\n%s", msg, help);
-                    xeh->xerror (CAT_SEVERITY_ERROR, header, NULL, 0, 0, true,
-                                 msgext);
+                    xerror (xeh, CAT_SEVERITY_ERROR, header, NULL, 0, 0, true,
+                            msgext);
                     free (msgext);
                     free (help);
                   }
                 else
-                  xeh->xerror (CAT_SEVERITY_ERROR, header, NULL, 0, 0, false,
-                               msg);
+                  xerror (xeh, CAT_SEVERITY_ERROR, header, NULL, 0, 0, false,
+                          msg);
 
                 seen_errors++;
               }
@@ -417,9 +417,9 @@ check_plural (const message_list_ty *mlp,
                                          "but some messages have only %lu plural forms",
                                          min_nplurals),
                                min_nplurals);
-                  xeh->xerror2 (CAT_SEVERITY_ERROR,
-                                header, NULL, 0, 0, false, msg1,
-                                min_pos, NULL, 0, 0, false, msg2);
+                  xerror2 (xeh, CAT_SEVERITY_ERROR,
+                           header, NULL, 0, 0, false, msg1,
+                           min_pos, NULL, 0, 0, false, msg2);
                   free (msg2);
                   free (msg1);
                   seen_errors++;
@@ -433,9 +433,9 @@ check_plural (const message_list_ty *mlp,
                                          "but some messages have %lu plural forms",
                                          max_nplurals),
                                max_nplurals);
-                  xeh->xerror2 (CAT_SEVERITY_ERROR,
-                                header, NULL, 0, 0, false, msg1,
-                                max_pos, NULL, 0, 0, false, msg2);
+                  xerror2 (xeh, CAT_SEVERITY_ERROR,
+                           header, NULL, 0, 0, false, msg1,
+                           max_pos, NULL, 0, 0, false, msg2);
                   free (msg2);
                   free (msg1);
                   seen_errors++;
@@ -452,8 +452,8 @@ check_plural (const message_list_ty *mlp,
     {
       if (has_plural != NULL)
         {
-          xeh->xerror (CAT_SEVERITY_ERROR, has_plural, NULL, 0, 0, false,
-                       _("message catalog has plural form translations, but lacks a header entry with \"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\""));
+          xerror (xeh, CAT_SEVERITY_ERROR, has_plural, NULL, 0, 0, false,
+                  _("message catalog has plural form translations, but lacks a header entry with \"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\""));
           seen_errors++;
         }
      no_plural:
@@ -504,14 +504,14 @@ formatstring_error_logger (void *data, const char *format, ...)
 
   char *msg;
   if (vasprintf (&msg, format, args) < 0)
-    l->xeh->xerror (CAT_SEVERITY_FATAL_ERROR, NULL, NULL, 0, 0, false,
-                    _("memory exhausted"));
+    xerror (l->xeh, CAT_SEVERITY_FATAL_ERROR, NULL, NULL, 0, 0, false,
+            _("memory exhausted"));
 
   va_end (args);
-  l->xeh->xerror (CAT_SEVERITY_ERROR,
-                  l->curr_mp,
-                  l->curr_msgid_pos.file_name, l->curr_msgid_pos.line_number,
-                  (size_t)(-1), false, msg);
+  xerror (l->xeh, CAT_SEVERITY_ERROR,
+          l->curr_mp,
+          l->curr_msgid_pos.file_name, l->curr_msgid_pos.line_number,
+          (size_t)(-1), false, msg);
   free (msg);
 }
 
@@ -553,10 +553,10 @@ check_pair (const message_ty *mp,
           {
             if (TEST_NEWLINE(msgid_plural) != has_newline)
               {
-                xeh->xerror (CAT_SEVERITY_ERROR,
-                             mp, msgid_pos->file_name, msgid_pos->line_number,
-                             (size_t)(-1), false,
-                             _("'msgid' and 'msgid_plural' entries do not both begin with '\\n'"));
+                xerror (xeh, CAT_SEVERITY_ERROR,
+                        mp, msgid_pos->file_name, msgid_pos->line_number,
+                        (size_t)(-1), false,
+                        _("'msgid' and 'msgid_plural' entries do not both begin with '\\n'"));
                 seen_errors++;
               }
             const char *p;
@@ -567,9 +567,9 @@ check_pair (const message_ty *mp,
                   char *msg =
                     xasprintf (_("'msgid' and 'msgstr[%u]' entries do not both begin with '\\n'"),
                                j);
-                  xeh->xerror (CAT_SEVERITY_ERROR,
-                               mp, msgid_pos->file_name, msgid_pos->line_number,
-                               (size_t)(-1), false, msg);
+                  xerror (xeh, CAT_SEVERITY_ERROR,
+                          mp, msgid_pos->file_name, msgid_pos->line_number,
+                          (size_t)(-1), false, msg);
                   free (msg);
                   seen_errors++;
                 }
@@ -578,10 +578,10 @@ check_pair (const message_ty *mp,
           {
             if (TEST_NEWLINE(msgstr) != has_newline)
               {
-                xeh->xerror (CAT_SEVERITY_ERROR,
-                             mp, msgid_pos->file_name, msgid_pos->line_number,
-                             (size_t)(-1), false,
-                             _("'msgid' and 'msgstr' entries do not both begin with '\\n'"));
+                xerror (xeh, CAT_SEVERITY_ERROR,
+                        mp, msgid_pos->file_name, msgid_pos->line_number,
+                        (size_t)(-1), false,
+                        _("'msgid' and 'msgstr' entries do not both begin with '\\n'"));
                 seen_errors++;
               }
           }
@@ -596,10 +596,10 @@ check_pair (const message_ty *mp,
           {
             if (TEST_NEWLINE(msgid_plural) != has_newline)
               {
-                xeh->xerror (CAT_SEVERITY_ERROR,
-                             mp, msgid_pos->file_name, msgid_pos->line_number,
-                             (size_t)(-1), false,
-                             _("'msgid' and 'msgid_plural' entries do not both end with '\\n'"));
+                xerror (xeh, CAT_SEVERITY_ERROR,
+                        mp, msgid_pos->file_name, msgid_pos->line_number,
+                        (size_t)(-1), false,
+                        _("'msgid' and 'msgid_plural' entries do not both end with '\\n'"));
                 seen_errors++;
               }
             const char *p;
@@ -610,9 +610,9 @@ check_pair (const message_ty *mp,
                   char *msg =
                     xasprintf (_("'msgid' and 'msgstr[%u]' entries do not both end with '\\n'"),
                                j);
-                  xeh->xerror (CAT_SEVERITY_ERROR,
-                               mp, msgid_pos->file_name, msgid_pos->line_number,
-                               (size_t)(-1), false, msg);
+                  xerror (xeh, CAT_SEVERITY_ERROR,
+                          mp, msgid_pos->file_name, msgid_pos->line_number,
+                          (size_t)(-1), false, msg);
                   free (msg);
                   seen_errors++;
                 }
@@ -621,10 +621,10 @@ check_pair (const message_ty *mp,
           {
             if (TEST_NEWLINE(msgstr) != has_newline)
               {
-                xeh->xerror (CAT_SEVERITY_ERROR,
-                             mp, msgid_pos->file_name, msgid_pos->line_number,
-                             (size_t)(-1), false,
-                             _("'msgid' and 'msgstr' entries do not both end with '\\n'"));
+                xerror (xeh, CAT_SEVERITY_ERROR,
+                        mp, msgid_pos->file_name, msgid_pos->line_number,
+                        (size_t)(-1), false,
+                        _("'msgid' and 'msgstr' entries do not both end with '\\n'"));
                 seen_errors++;
               }
           }
@@ -634,10 +634,10 @@ check_pair (const message_ty *mp,
 
   if (check_compatibility && msgid_plural != NULL)
     {
-      xeh->xerror (CAT_SEVERITY_ERROR,
-                   mp, msgid_pos->file_name, msgid_pos->line_number,
-                   (size_t)(-1), false,
-                   _("plural handling is a GNU gettext extension"));
+      xerror (xeh, CAT_SEVERITY_ERROR,
+              mp, msgid_pos->file_name, msgid_pos->line_number,
+              (size_t)(-1), false,
+              _("plural handling is a GNU gettext extension"));
       seen_errors++;
     }
 
@@ -679,9 +679,9 @@ check_pair (const message_ty *mp,
               char *msg =
                 xasprintf (_("msgstr lacks the keyboard accelerator mark '%c'"),
                            accelerator_char);
-              xeh->xerror (CAT_SEVERITY_ERROR,
-                           mp, msgid_pos->file_name, msgid_pos->line_number,
-                           (size_t)(-1), false, msg);
+              xerror (xeh, CAT_SEVERITY_ERROR,
+                      mp, msgid_pos->file_name, msgid_pos->line_number,
+                      (size_t)(-1), false, msg);
               free (msg);
               seen_errors++;
             }
@@ -690,9 +690,9 @@ check_pair (const message_ty *mp,
               char *msg =
                 xasprintf (_("msgstr has too many keyboard accelerator marks '%c'"),
                            accelerator_char);
-              xeh->xerror (CAT_SEVERITY_ERROR,
-                           mp, msgid_pos->file_name, msgid_pos->line_number,
-                           (size_t)(-1), false, msg);
+              xerror (xeh, CAT_SEVERITY_ERROR,
+                      mp, msgid_pos->file_name, msgid_pos->line_number,
+                      (size_t)(-1), false, msg);
               free (msg);
               seen_errors++;
             }
@@ -763,7 +763,7 @@ check_header_entry (const message_ty *mp, const char *msgstr_string,
                       char *msg =
                         xasprintf (_("header field '%s' still has the initial default value\n"),
                                    field);
-                      xeh->xerror (severity, mp, NULL, 0, 0, true, msg);
+                      xerror (xeh, severity, mp, NULL, 0, 0, true, msg);
                       free (msg);
                       if (severity == CAT_SEVERITY_ERROR)
                         seen_errors++;
@@ -780,7 +780,7 @@ check_header_entry (const message_ty *mp, const char *msgstr_string,
           char *msg =
             xasprintf (_("header field '%s' missing in header\n"),
                        field);
-          xeh->xerror (severity, mp, NULL, 0, 0, true, msg);
+          xerror (xeh, severity, mp, NULL, 0, 0, true, msg);
           free (msg);
           if (severity == CAT_SEVERITY_ERROR)
             seen_errors++;

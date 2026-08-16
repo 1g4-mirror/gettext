@@ -117,11 +117,11 @@ msgdomain_list_print (msgdomain_list_ty *mdlp, const char *filename,
   if (!output_syntax->supports_multiple_domains && mdlp->nitems > 1)
     {
       if (output_syntax->alternative_is_po)
-        xeh->xerror (CAT_SEVERITY_FATAL_ERROR, NULL, NULL, 0, 0, false,
-                     _("Cannot output multiple translation domains into a single file with the specified output format. Try using PO file syntax instead."));
+        xerror (xeh, CAT_SEVERITY_FATAL_ERROR, NULL, NULL, 0, 0, false,
+                _("Cannot output multiple translation domains into a single file with the specified output format. Try using PO file syntax instead."));
       else
-        xeh->xerror (CAT_SEVERITY_FATAL_ERROR, NULL, NULL, 0, 0, false,
-                     _("Cannot output multiple translation domains into a single file with the specified output format."));
+        xerror (xeh, CAT_SEVERITY_FATAL_ERROR, NULL, NULL, 0, 0, false,
+                _("Cannot output multiple translation domains into a single file with the specified output format."));
     }
   else
     {
@@ -145,10 +145,10 @@ msgdomain_list_print (msgdomain_list_ty *mdlp, const char *filename,
             }
 
           if (has_context != NULL)
-            xeh->xerror (CAT_SEVERITY_FATAL_ERROR, NULL,
-                         has_context->file_name, has_context->line_number,
-                         (size_t)(-1), false,
-                         _("message catalog has context dependent translations, but the output format does not support them."));
+            xerror (xeh, CAT_SEVERITY_FATAL_ERROR, NULL,
+                    has_context->file_name, has_context->line_number,
+                    (size_t)(-1), false,
+                    _("message catalog has context dependent translations, but the output format does not support them."));
         }
 
       if (!output_syntax->supports_plurals)
@@ -173,15 +173,15 @@ msgdomain_list_print (msgdomain_list_ty *mdlp, const char *filename,
           if (has_plural != NULL)
             {
               if (output_syntax->alternative_is_java_class)
-                xeh->xerror (CAT_SEVERITY_FATAL_ERROR, NULL,
-                             has_plural->file_name, has_plural->line_number,
-                             (size_t)(-1), false,
-                             _("message catalog has plural form translations, but the output format does not support them. Try generating a Java class using \"msgfmt --java\", instead of a properties file."));
+                xerror (xeh, CAT_SEVERITY_FATAL_ERROR, NULL,
+                        has_plural->file_name, has_plural->line_number,
+                        (size_t)(-1), false,
+                        _("message catalog has plural form translations, but the output format does not support them. Try generating a Java class using \"msgfmt --java\", instead of a properties file."));
               else
-                xeh->xerror (CAT_SEVERITY_FATAL_ERROR, NULL,
-                             has_plural->file_name, has_plural->line_number,
-                             (size_t)(-1), false,
-                             _("message catalog has plural form translations, but the output format does not support them."));
+                xerror (xeh, CAT_SEVERITY_FATAL_ERROR, NULL,
+                        has_plural->file_name, has_plural->line_number,
+                        (size_t)(-1), false,
+                        _("message catalog has plural form translations, but the output format does not support them."));
             }
         }
     }
@@ -206,10 +206,10 @@ msgdomain_list_print (msgdomain_list_ty *mdlp, const char *filename,
           if (fd < 0)
             {
               int err = errno;
-              xeh->xerror (CAT_SEVERITY_FATAL_ERROR, NULL, NULL, 0, 0, false,
-                           xstrerror (xasprintf (_("cannot create output file \"%s\""),
-                                                 filename),
-                                      err));
+              xerror (xeh, CAT_SEVERITY_FATAL_ERROR, NULL, NULL, 0, 0, false,
+                      xstrerror (xasprintf (_("cannot create output file \"%s\""),
+                                            filename),
+                                 err));
             }
         }
       else
@@ -230,10 +230,10 @@ msgdomain_list_print (msgdomain_list_ty *mdlp, const char *filename,
       if (close (fd) < 0)
         {
           int err = errno;
-          xeh->xerror (CAT_SEVERITY_FATAL_ERROR, NULL, NULL, 0, 0, false,
-                       xstrerror (xasprintf (_("error while writing \"%s\" file"),
-                                             filename),
-                                  err));
+          xerror (xeh, CAT_SEVERITY_FATAL_ERROR, NULL, NULL, 0, 0, false,
+                  xstrerror (xasprintf (_("error while writing \"%s\" file"),
+                                        filename),
+                             err));
         }
     }
   else
@@ -247,10 +247,10 @@ msgdomain_list_print (msgdomain_list_ty *mdlp, const char *filename,
           if (fp == NULL)
             {
               int err = errno;
-              xeh->xerror (CAT_SEVERITY_FATAL_ERROR, NULL, NULL, 0, 0, false,
-                           xstrerror (xasprintf (_("cannot create output file \"%s\""),
-                                                 filename),
-                                      err));
+              xerror (xeh, CAT_SEVERITY_FATAL_ERROR, NULL, NULL, 0, 0, false,
+                      xstrerror (xasprintf (_("cannot create output file \"%s\""),
+                                            filename),
+                                 err));
             }
         }
       else
@@ -298,10 +298,10 @@ msgdomain_list_print (msgdomain_list_ty *mdlp, const char *filename,
       if (fwriteerror (fp))
         {
           int err = errno;
-          xeh->xerror (CAT_SEVERITY_FATAL_ERROR, NULL, NULL, 0, 0, false,
-                       xstrerror (xasprintf (_("error while writing \"%s\" file"),
-                                             filename),
-                                  err));
+          xerror (xeh, CAT_SEVERITY_FATAL_ERROR, NULL, NULL, 0, 0, false,
+                  xstrerror (xasprintf (_("error while writing \"%s\" file"),
+                                        filename),
+                             err));
         }
     }
 }

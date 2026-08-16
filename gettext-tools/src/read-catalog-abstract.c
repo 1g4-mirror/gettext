@@ -165,13 +165,13 @@ catalog_reader_parse (abstract_catalog_reader_ty *catr, FILE *fp,
 
   unsigned int num_errors = *(catr->xeh->error_message_count_p);
   if (num_errors > 0)
-    catr->xeh->xerror (CAT_SEVERITY_FATAL_ERROR, NULL,
-                       /*real_filename*/ NULL, (size_t)(-1), (size_t)(-1),
-                       false,
-                       xasprintf (ngettext ("found %u fatal error",
-                                            "found %u fatal errors",
-                                            num_errors),
-                                  num_errors));
+    xerror (catr->xeh, CAT_SEVERITY_FATAL_ERROR, NULL,
+            /*real_filename*/ NULL, (size_t)(-1), (size_t)(-1),
+            false,
+            xasprintf (ngettext ("found %u fatal error",
+                                 "found %u fatal errors",
+                                 num_errors),
+                       num_errors));
 }
 
 
